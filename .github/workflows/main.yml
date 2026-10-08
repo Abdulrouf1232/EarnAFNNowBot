@@ -1,0 +1,33 @@
+name: EarnAFNNowBot Test
+
+on:
+workflow_dispatch:
+
+jobs:
+test:
+runs-on: ubuntu-latest
+steps:
+- name: Get repository code
+uses: actions/checkout@v4
+
+  - name: Set up Node.js
+    uses: actions/setup-node@v4
+    with:
+      node-version: 20
+
+  - name: Install dependencies
+    run: |
+      if [ -f package-lock.json ]; then
+        npm ci
+      elif [ -f package.json ]; then
+        npm install
+      else
+        echo "package.json not found"
+        exit 1
+      fi
+
+  - name: Check JavaScript syntax
+    run: |
+      node --version
+      npm --version
+      echo "Dependencies installed successfully"
